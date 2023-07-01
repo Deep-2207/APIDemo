@@ -1,12 +1,13 @@
-﻿using ApiDemo_1.Model;
+﻿using ApiDemo_1.MiddleWare;
+using ApiDemo_1.Model;
 using ApiDemo_1.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ApiDemo_1.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class ProductController : ControllerBase
     {
         private ProductRepository _repository;
