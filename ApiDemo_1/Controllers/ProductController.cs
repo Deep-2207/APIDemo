@@ -8,6 +8,7 @@ namespace ApiDemo_1.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [LogFilterAtribute]
     public class ProductController : ControllerBase
     {
         private ProductRepository _repository;
@@ -18,8 +19,17 @@ namespace ApiDemo_1.Controllers
         [HttpGet]
         public IEnumerable<Product> GetAll()
         {
+            //throw new NotImplementedException();
+            IEnumerable<Product> products = getallbyFunction();
+            return products;
+            //return _repository.GetAll();
+        }
+        [NonAction]
+        public IEnumerable<Product> getallbyFunction()
+        {
             return _repository.GetAll();
         }
+
         [HttpGet("{ProductID}")]
         public Product GetByID(int ProductID)
         {
