@@ -1,5 +1,6 @@
 using ApiDemo_1.MiddleWare;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -22,6 +23,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
         ValidAudience = config["Jwt:Audience"],
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["Jwt:Key"]))
     };
+
+    //option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    //option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    //option.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+
 });
 
 builder.Services.AddControllers();
