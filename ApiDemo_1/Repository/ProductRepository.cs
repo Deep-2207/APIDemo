@@ -1,5 +1,6 @@
 ﻿using ApiDemo_1.Model;
 using Dapper;
+using Serilog;
 using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
@@ -24,6 +25,7 @@ namespace ApiDemo_1.Repository
 
         public void Add(Product prod)
         {
+            //int convertID = Convert.ToInt32(prod.ProductName);
             using (IDbConnection IDbConnection = Connection)
             {
                 string sQuery = @"INSERT INTO Product (ProductName,Price) values (@ProductName,@Price)";

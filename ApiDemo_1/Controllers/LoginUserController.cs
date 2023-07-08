@@ -1,8 +1,10 @@
 ﻿using ApiDemo_1.Constant;
 using ApiDemo_1.Model;
+using log4net;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using Serilog;
 using System.Collections.Concurrent;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -15,13 +17,19 @@ namespace ApiDemo_1.Controllers
     public class LoginUserController : ControllerBase
     {
         public IConfiguration _configuration;
-        public LoginUserController(IConfiguration configuration)
+        //private static readonly ILog log = LogManager.GetLogger(typeof(LoginUserController));
+        public readonly ILogger<LoginUserController> _logger;
+
+        public LoginUserController(IConfiguration configuration, ILogger<LoginUserController> logger)
         {
             _configuration = configuration;
+            _logger = logger;
+
         }
         [HttpPost]
         public IActionResult Login([FromBody] UserLogin userLogin)
         {
+            this._logger.LogInformation("This is the starting Login Method form contorller");
             var user = Authentication(userLogin);
 
             if(user != null)
@@ -29,7 +37,7 @@ namespace ApiDemo_1.Controllers
                 var token = GendrateToken(user);
                 return Ok(token);
             }
-
+            this._logger.LogInformation("This is the End Login Method");
             return NotFound("User is not Found");
         }
 
@@ -47,6 +55,7 @@ namespace ApiDemo_1.Controllers
 
         private string GendrateToken(UserModel userModel)
         {
+            this._logger.LogInformation("This is the starting Login Method form Gendrate Token");
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
             var credentials = new SigningCredentials(securityKey,SecurityAlgorithms.HmacSha256);
 

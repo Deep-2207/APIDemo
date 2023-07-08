@@ -2,6 +2,7 @@ using ApiDemo_1.MiddleWare;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Serilog;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -35,9 +36,15 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<ExceptionHandlerMiddleware>();
+
+/*Error Handle With globali We Don't neet any line one line to add loag [ Automaticlly ] start*/
+var _logger = new LoggerConfiguration()
+    .WriteTo
+    .File("D:\\Demo_Project\\ApiDemo_1\\Log\\ApiLogs.log", rollingInterval: RollingInterval.Day)
+    .CreateLogger();
+builder.Logging.AddSerilog(_logger);
+/*Error Handle With globali We Don't neet any line one line to add loag [ Automaticlly ] End*/
 var app = builder.Build();
-
-
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 {

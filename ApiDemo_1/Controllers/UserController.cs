@@ -1,4 +1,5 @@
 ﻿using ApiDemo_1.Model;
+using log4net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +12,8 @@ namespace ApiDemo_1.Controllers
     [Authorize]
     public class UserController : ControllerBase
     {
+        public static readonly ILog Log = LogManager.GetLogger(typeof(UserController));
+
         [HttpGet("Admin")]
         [Authorize]
         public IActionResult AdminMethod()
